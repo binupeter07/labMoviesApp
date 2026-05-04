@@ -27,12 +27,12 @@ const SiteHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  const menuOptions = [
-    { label: "Home", path: "/" },
-    { label: "Favorites", path: "/movies/favourites" },
-    { label: "Option 3", path: "/" },
-    { label: "Option 4", path: "/" },
-  ];
+const menuOptions = [
+  { label: "Home", path: "/" },
+  { label: "Favorites", path: "/movies/favourites" },
+  { label: "Upcoming", path: "/movies/upcoming" },
+  { label: "Option 4", path: "/" },
+];
 
   const handleMenuSelect = (pageURL: string) => {
     navigate(pageURL);
