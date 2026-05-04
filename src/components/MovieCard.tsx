@@ -13,6 +13,9 @@ import IconButton from "@mui/material/IconButton";
 import img from '../images/film-poster-placeholder.png';
 import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
 import { Link } from "react-router-dom";
+import  {MouseEvent} from "react";
+import Avatar from "@mui/material/Avatar";
+
 
 const styles = {
   card: { maxWidth: 345 },
@@ -22,12 +25,37 @@ const styles = {
   },
 };
 
-const MovieCard = (movie: DiscoverMovieOverviewProps) => {
+
+
+
+interface MovieCardProps  {
+  movie: DiscoverMovieOverviewProps;
+  selectFavourite: (movieId: number) => void;
+}
+
+const MovieCard = ({movie, selectFavourite}: MovieCardProps) => {
  
+  const handleAddToFavourite = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    selectFavourite(movie.id);
+  };
 
   return (
     <Card sx={styles.card}>
-      <CardHeader title={movie.title ?? "Untitled"} />
+      <CardHeader
+        avatar={
+          movie.favourite ? (
+            <Avatar sx={styles.avatar}>
+              <FavoriteIcon />
+            </Avatar>
+          ) : null
+        }
+        title={
+          <Typography variant="h5" component="p">
+            {movie.title}{" "}
+          </Typography>
+        }
+      />
       <CardMedia
         sx={styles.media}
         image={
@@ -53,9 +81,9 @@ const MovieCard = (movie: DiscoverMovieOverviewProps) => {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" >
+        <IconButton aria-label="add to favourites" onClick={handleAddToFavourite}>
           <FavoriteIcon color="primary" fontSize="large" />
-        </IconButton>
+    </IconButton>
                 <Link to={`/movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
