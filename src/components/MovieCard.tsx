@@ -1,3 +1,4 @@
+import { MouseEvent, useContext } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -10,12 +11,11 @@ import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
+import Avatar from "@mui/material/Avatar";
 import img from '../images/film-poster-placeholder.png';
 import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
 import { Link } from "react-router-dom";
-import  {MouseEvent} from "react";
-import Avatar from "@mui/material/Avatar";
-
+import { MoviesContext } from "../contexts/moviesContext";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -25,26 +25,24 @@ const styles = {
   },
 };
 
-
-
-
-interface MovieCardProps  {
+interface MovieCardProps {
   movie: DiscoverMovieOverviewProps;
-  selectFavourite: (movieId: number) => void;
 }
 
-const MovieCard = ({movie, selectFavourite}: MovieCardProps) => {
- 
+const MovieCard = ({ movie }: MovieCardProps) => {
+  const { favourites, addToFavourites } = useContext(MoviesContext);
+  const isFavourite = favourites.find((id) => id === movie.id) ? true : false;
+
   const handleAddToFavourite = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    selectFavourite(movie.id);
+    addToFavourites(movie);
   };
 
   return (
     <Card sx={styles.card}>
       <CardHeader
         avatar={
-          movie.favourite ? (
+          isFavourite ? (
             <Avatar sx={styles.avatar}>
               <FavoriteIcon />
             </Avatar>
@@ -83,16 +81,15 @@ const MovieCard = ({movie, selectFavourite}: MovieCardProps) => {
       <CardActions disableSpacing>
         <IconButton aria-label="add to favourites" onClick={handleAddToFavourite}>
           <FavoriteIcon color="primary" fontSize="large" />
-    </IconButton>
-                <Link to={`/movies/${movie.id}`}>
+        </IconButton>
+        <Link to={`/movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
           </Button>
         </Link>
-
       </CardActions>
     </Card>
   );
-}
+};
 
 export default MovieCard;
