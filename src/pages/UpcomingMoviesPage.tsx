@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import PageTemplate from "../components/TemplateMovieListPage";
 import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
 import { getUpcomingMovies } from "../api/tmdb-api";
+import AddToMustWatchIcon from "../components/cardIcons/AddToMustWatch";
 
 const UpcomingMoviesPage = () => {
   const [movies, setMovies] = useState<DiscoverMovieOverviewProps[]>([]);
@@ -16,7 +17,7 @@ const UpcomingMoviesPage = () => {
     <PageTemplate
       title="Upcoming Movies"
       movies={movies}
-      action={() => <></>}
+      action={(movie) => <AddToMustWatchIcon {...movie} />}
     />
   );
 };
