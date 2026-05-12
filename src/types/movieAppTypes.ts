@@ -52,3 +52,11 @@ export type genreData = {
     name: string;
   }[];
 };
+
+export type Review = {
+  author: string;
+  content: string;
+  rating: number;
+  movieId: number;
+  agree: boolean;
+};
