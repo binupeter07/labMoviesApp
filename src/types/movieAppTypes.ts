@@ -6,25 +6,24 @@ import { paths } from "./generated/tmdb";
 export type DiscoverMoviesProps = paths["/3/discover/movie"]["get"]["responses"][200]["content"]["application/json"];
 
 // Type for a single movie object from the discover movies response
-export type DiscoverMovieOverviewProps =  NonNullable<DiscoverMoviesProps["results"]>[number] & {
-favourite: boolean;
+export type DiscoverMovieOverviewProps = NonNullable<DiscoverMoviesProps["results"]>[number] & {
+  favourite: boolean;
 };
 
 // Props interface for components that display a list of movies
-export type BaseMovieListProps  ={
+export type BaseMovieListProps = {
   movies: NonNullable<DiscoverMovieOverviewProps[]>;
-  selectFavourite: (movieId: number) => void;  //add this
+  action: (m: DiscoverMovieOverviewProps) => React.ReactNode;
 }
 
 // Type for the API response when fetching detailed movie information
 export type MovieDetailsProps = paths["/3/movie/{movie_id}"]["get"]["responses"][200]["content"]["application/json"] & {
-favourite: boolean;
+  favourite: boolean;
 };
 
 export interface MovieListPageTemplateProps extends BaseMovieListProps {
   title: string;
 }
-
 
 export type MovieImage = {
   file_path: string;
@@ -46,3 +45,10 @@ export type FilterOption = "title" | "genre";
 export type MovieReviewsProps = paths["/3/movie/{movie_id}/reviews"]["get"]["responses"][200]["content"]["application/json"];
 
 export type MovieReviewProps = NonNullable<MovieReviewsProps["results"]>[number];
+
+export type genreData = {
+  genres: {
+    id: number;
+    name: string;
+  }[];
+};

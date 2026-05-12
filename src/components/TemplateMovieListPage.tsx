@@ -1,15 +1,15 @@
 import Header from "./HeaderMovieList";
 import Grid from "@mui/material/Grid";
 import MovieList from "./MovieList";
-import {  MovieListPageTemplateProps} from "../types/movieAppTypes";
+import { MovieListPageTemplateProps } from "../types/movieAppTypes";
 
 const styles = {
-  root: { 
+  root: {
     backgroundColor: "#bfbfbf",
   }
 };
 
-const MovieListPageTemplate= ({ movies, title, selectFavourite }: MovieListPageTemplateProps)=> {
+const MovieListPageTemplate = ({ movies, title, action }: MovieListPageTemplateProps) => {
   return (
     <Grid container sx={styles.root}>
       <Grid item xs={12}>
@@ -17,11 +17,12 @@ const MovieListPageTemplate= ({ movies, title, selectFavourite }: MovieListPageT
       </Grid>
       <Grid item container spacing={5}>
         <MovieList
-          selectFavourite={selectFavourite}
+          action={action}
           movies={movies}
-        ></MovieList>
+        />
       </Grid>
     </Grid>
   );
-}
+};
+
 export default MovieListPageTemplate;
