@@ -6,6 +6,8 @@ type MovieContextInterface = {
   addToFavourites: ((movie: MovieDetailsProps) => void);
   removeFromFavourites: ((movie: MovieDetailsProps) => void);
   addReview: ((movie: MovieDetailsProps, review: Review) => void);
+  mustWatch: number[];
+  addToMustWatch: ((movie: MovieDetailsProps) => void);
 }
 
 const initialContextState: MovieContextInterface = {
@@ -13,6 +15,8 @@ const initialContextState: MovieContextInterface = {
   addToFavourites: () => {},
   removeFromFavourites: () => {},
   addReview: (movie, review) => { movie.id, review },
+  mustWatch: [],
+  addToMustWatch: () => {},
 };
 
 export const MoviesContext = React.createContext<MovieContextInterface>(initialContextState);
@@ -20,6 +24,7 @@ export const MoviesContext = React.createContext<MovieContextInterface>(initialC
 const MoviesContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [favourites, setFavourites] = useState<number[]>([]);
   const [myReviews, setMyReviews] = useState<Review[]>([]);
+  const [mustWatch, setMustWatch] = useState<number[]>([]);
 
   const addToFavourites = useCallback((movie: MovieDetailsProps) => {
     setFavourites((prevFavourites) => {
@@ -38,6 +43,17 @@ const MoviesContextProvider = ({ children }: { children: React.ReactNode }) => {
     setMyReviews({ ...myReviews, [movie.id]: review });
   };
 
+  const addToMustWatch = useCallback((movie: MovieDetailsProps) => {
+    setMustWatch((prevMustWatch) => {
+      if (!prevMustWatch.includes(movie.id)) {
+        const updated = [...prevMustWatch, movie.id];
+        console.log("Must Watch list: ", updated);
+        return updated;
+      }
+      return prevMustWatch;
+    });
+  }, []);
+
   return (
     <MoviesContext.Provider
       value={{
@@ -45,6 +61,8 @@ const MoviesContextProvider = ({ children }: { children: React.ReactNode }) => {
         addToFavourites,
         removeFromFavourites,
         addReview,
+        mustWatch,
+        addToMustWatch,
       }}
     >
       {children}
