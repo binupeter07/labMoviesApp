@@ -15,6 +15,7 @@ import img from '../images/film-poster-placeholder.png';
 import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
 import { Link } from "react-router-dom";
 import { MoviesContext } from "../contexts/moviesContext";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -30,19 +31,24 @@ interface MovieCardProps {
 }
 
 const MovieCard = ({ movie, action }: MovieCardProps) => {
-  const { favourites } = useContext(MoviesContext);
+  const { favourites, mustWatch } = useContext(MoviesContext);
   const isFavourite = favourites.find((id) => id === movie.id) ? true : false;
+  const isMustWatch = mustWatch.find((id) => id === movie.id) ? true : false;
 
   return (
     <Card sx={styles.card}>
       <CardHeader
-        avatar={
-          isFavourite ? (
-            <Avatar sx={styles.avatar}>
-              <FavoriteIcon />
-            </Avatar>
-          ) : null
-        }
+  avatar={
+    isFavourite ? (
+      <Avatar sx={styles.avatar}>
+        <FavoriteIcon />
+      </Avatar>
+    ) : isMustWatch ? (
+      <Avatar sx={{ backgroundColor: "rgb(255, 0, 0)" }}>
+        <PlaylistAddIcon />
+      </Avatar>
+    ) : null
+  }
         title={
           <Typography variant="h5" component="p">
             {movie.title}{" "}
