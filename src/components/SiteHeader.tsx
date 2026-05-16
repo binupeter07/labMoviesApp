@@ -4,6 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -12,12 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { MoviesContext } from "../contexts/moviesContext";
-
-const styles = {
-  title: {
-    flexGrow: 1,
-  },
-};
+import MovieIcon from "@mui/icons-material/Movie";
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
@@ -60,14 +56,31 @@ const SiteHeader = () => {
 
   return (
     <>
-      <AppBar position="fixed" elevation={0} color="primary">
-        <Toolbar>
-          <Typography variant="h4" sx={styles.title}>
-            TMDB Client
-          </Typography>
-          <Typography variant="h6" sx={styles.title}>
-            All you ever wanted to know about Movies!
-          </Typography>
+      <AppBar
+        position="fixed"
+        elevation={0}
+        sx={{
+          background: "linear-gradient(to right, #000000, #1a1a2e)",
+          borderBottom: "2px solid #e50914",
+        }}
+      >
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <MovieIcon sx={{ color: "#e50914", mr: 1, fontSize: 35 }} />
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: "bold",
+                color: "#e50914",
+                letterSpacing: 2,
+                cursor: "pointer",
+              }}
+              onClick={() => navigate("/")}
+            >
+              MovieHub
+            </Typography>
+          </Box>
+
           {isMobile ? (
             <>
               <IconButton
@@ -75,7 +88,7 @@ const SiteHeader = () => {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleMenu}
-                color="inherit"
+                sx={{ color: "white" }}
                 size="large"
               >
                 <MenuIcon />
@@ -94,38 +107,63 @@ const SiteHeader = () => {
                 }}
                 open={open}
                 onClose={() => setAnchorEl(null)}
+                PaperProps={{
+                  sx: {
+                    backgroundColor: "#1a1a2e",
+                    color: "white",
+                  },
+                }}
               >
                 {menuOptions.map((opt) => (
                   <MenuItem
                     key={opt.label}
                     onClick={() => handleMenuSelect(opt.path)}
+                    sx={{ "&:hover": { color: "#e50914" } }}
                   >
                     {opt.label}
                   </MenuItem>
                 ))}
-                <MenuItem onClick={handleAuthAction}>
+                <MenuItem
+                  onClick={handleAuthAction}
+                  sx={{ color: "#e50914", fontWeight: "bold" }}
+                >
                   {isAuthenticated ? "Logout" : "Login"}
                 </MenuItem>
               </Menu>
             </>
           ) : (
-            <>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
               {menuOptions.map((opt) => (
                 <Button
                   key={opt.label}
-                  color="inherit"
                   onClick={() => handleMenuSelect(opt.path)}
+                  sx={{
+                    color: "white",
+                    fontSize: "0.75rem",
+                    "&:hover": {
+                      color: "#e50914",
+                      backgroundColor: "transparent",
+                    },
+                  }}
                 >
                   {opt.label}
                 </Button>
               ))}
               <Button
-                color="inherit"
                 onClick={handleAuthAction}
+                sx={{
+                  ml: 2,
+                  color: "white",
+                  backgroundColor: "#e50914",
+                  fontWeight: "bold",
+                  "&:hover": {
+                    backgroundColor: "#b20710",
+                  },
+                }}
               >
                 {isAuthenticated ? "Logout" : "Login"}
               </Button>
-            </>
+            </Box>
           )}
         </Toolbar>
       </AppBar>
