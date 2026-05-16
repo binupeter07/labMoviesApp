@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import { useQuery } from "react-query";
 import { getPopularActors } from "../api/tmdb-api";
 import { Actor } from "../types/movieAppTypes";
@@ -29,31 +30,51 @@ const ActorsPage = () => {
     : actors;
 
   return (
-    <>
-      <Paper sx={{ p: 3, mb: 2 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
+    <Box sx={{ backgroundColor: "#141414", minHeight: "100vh", pb: 4 }}>
+      {/* Header */}
+      <Box
+        sx={{
+          background: "linear-gradient(to right, #000000, #1a1a2e)",
+          borderBottom: "2px solid #e50914",
+          px: 3,
+          py: 2,
+          mb: 3,
+        }}
+      >
+        <Typography
+          variant="h4"
+          sx={{ color: "white", fontWeight: "bold", letterSpacing: 2 }}
+        >
           Popular Actors
         </Typography>
-      </Paper>
+      </Box>
 
-      <Paper sx={{ p: 2, mb: 2 }}>
+      <Box sx={{ px: 3, mb: 3 }}>
         <TextField
           fullWidth
           label="Filter by name"
           variant="outlined"
           value={nameFilter}
           onChange={(e) => setNameFilter(e.target.value)}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              color: "white",
+              "& fieldset": { borderColor: "#e50914" },
+              "&:hover fieldset": { borderColor: "#e50914" },
+            },
+            "& .MuiInputLabel-root": { color: "#aaaaaa" },
+          }}
         />
-      </Paper>
+      </Box>
 
-      <Grid container spacing={2} justifyContent="center">
-  {displayedActors.map((actor) => (
-    <Grid item key={actor.id} xs={6} sm={4} md={3} lg={2}>
+      <Grid container spacing={2} sx={{ px: 3 }} justifyContent="center">
+        {displayedActors.map((actor) => (
+          <Grid item key={actor.id} xs={6} sm={4} md={3} lg={2}>
             <ActorCard actor={actor} />
           </Grid>
         ))}
       </Grid>
-    </>
+    </Box>
   );
 };
 

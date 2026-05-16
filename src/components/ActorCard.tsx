@@ -12,17 +12,35 @@ const ActorCard = ({ actor }: { actor: Actor }) => {
     <Card
       component={Link}
       to={`/actors/${actor.id}`}
-      sx={{ 
-        textDecoration: "none", 
+      sx={{
+        textDecoration: "none",
         color: "inherit",
-        maxWidth: 250,
-        margin: "auto"
+        backgroundColor: "#1f1f1f",
+        borderRadius: 3,
+        transition: "transform 0.3s, box-shadow 0.3s",
+        "&:hover": {
+          transform: "scale(1.03)",
+          boxShadow: "0 8px 20px rgba(229, 9, 20, 0.4)",
+        },
       }}
     >
       <CardHeader
-        avatar={<Avatar>{actor.name[0]}</Avatar>}
-        title={actor.name}
-        subheader={actor.known_for_department}
+        avatar={
+          <Avatar sx={{ backgroundColor: "#e50914" }}>
+            {actor.name[0]}
+          </Avatar>
+        }
+        title={
+          <Typography variant="body1" sx={{ color: "white", fontWeight: "bold" }}>
+            {actor.name}
+          </Typography>
+        }
+        subheader={
+          <Typography variant="body2" sx={{ color: "#aaaaaa" }}>
+            {actor.known_for_department}
+          </Typography>
+        }
+        sx={{ backgroundColor: "#141414", pb: 1 }}
       />
       <CardMedia
         component="img"
@@ -33,14 +51,13 @@ const ActorCard = ({ actor }: { actor: Actor }) => {
         }
         alt={actor.name}
         sx={{
-          height: 250,
-          width: "100%",
+          height: 220,
           objectFit: "contain",
-          backgroundColor: "grey.100",
+          backgroundColor: "#2f2f2f",
         }}
       />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
+      <CardContent sx={{ backgroundColor: "#1f1f1f" }}>
+        <Typography variant="body2" sx={{ color: "#aaaaaa" }}>
           Known for: {actor.known_for.map(k => k.title || k.name).join(", ")}
         </Typography>
       </CardContent>
