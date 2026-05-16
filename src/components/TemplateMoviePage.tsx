@@ -1,69 +1,98 @@
 import React, { useState, useEffect } from "react";
 import MovieHeader from "./HeaderMovie";
+import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
+import IconButton from "@mui/material/IconButton";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import Typography from "@mui/material/Typography";
 import { getMovieImages } from "../api/tmdb-api";
 import { MovieImage, MovieDetailsProps } from "../types/movieAppTypes";
 
-const styles = {
-    gridListRoot: {
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-around",
-    },
-    gridListTile: {
-        width: 450,
-        height: '100vh',
-    },
-};
-
 interface TemplateMoviePageProps {
-    movie: MovieDetailsProps;
-    children: React.ReactElement;
+  movie: MovieDetailsProps;
+  children: React.ReactElement;
 }
 
+const TemplateMoviePage = ({ movie, children }: TemplateMoviePageProps) => {
+  const [images, setImages] = useState<MovieImage[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-const TemplateMoviePage = ({movie, children}: TemplateMoviePageProps) => {
-    const [images, setImages] = useState([]);
+  useEffect(() => {
+    getMovieImages(movie.id).then((images) => {
+      setImages(images.slice(0, 10));
+    });
+  }, []);
 
-    useEffect(() => {
-        getMovieImages(movie.id).then((images) => {
-            setImages(images);
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
 
-    return (
-        <>
-            <MovieHeader {...movie} />
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
 
-            <Grid container spacing={5} style={{ padding: "15px" }}>
-                <Grid item xs={3}>
-                    <div>
-                        <ImageList cols={1}>
-                            {images.map((image: MovieImage) => (
-                                <ImageListItem
-                                    key={image.file_path}
-                                    sx={styles.gridListTile}
-                                    cols={1}
-                                >
-                                    <img
-                                        src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-                                        alt={'Image alternative'}
-                                    />
-                                </ImageListItem>
-                            ))}
-                        </ImageList>
-                    </div>
-                </Grid>
+  return (
+    <Box sx={{ backgroundColor: "#141414", minHeight: "100vh" }}>
+      <MovieHeader {...movie} />
 
-                <Grid item xs={9}>
-                    {children}
-                </Grid>
-            </Grid>
-        </>
-    );
+      <Grid container spacing={3} sx={{ p: 3 }}>
+        <Grid item xs={12} md={3}>
+          {images.length > 0 && (
+            <Box>
+              <img
+                src={`https://image.tmdb.org/t/p/w500/${images[currentIndex].file_path}`}
+                alt="Movie poster"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  borderRadius: "12px",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+                }}
+              />
+              <Box sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                mt: 1,
+                gap: 1,
+              }}>
+                <IconButton
+                  onClick={handlePrev}
+                  size="small"
+                  sx={{
+                    color: "white",
+                    backgroundColor: "#e50914",
+                    "&:hover": { backgroundColor: "#b20710" },
+                  }}
+                >
+                  <ArrowBackIcon fontSize="small" />
+                </IconButton>
+                <Typography variant="body2" sx={{ color: "white" }}>
+                  {currentIndex + 1} / {images.length}
+                </Typography>
+                <IconButton
+                  onClick={handleNext}
+                  size="small"
+                  sx={{
+                    color: "white",
+                    backgroundColor: "#e50914",
+                    "&:hover": { backgroundColor: "#b20710" },
+                  }}
+                >
+                  <ArrowForwardIcon fontSize="small" />
+                </IconButton>
+              </Box>
+            </Box>
+          )}
+        </Grid>
+
+        <Grid item xs={12} md={9}>
+          {children}
+        </Grid>
+      </Grid>
+    </Box>
+  );
 };
 
 export default TemplateMoviePage;

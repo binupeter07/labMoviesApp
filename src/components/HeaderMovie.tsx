@@ -1,56 +1,51 @@
-import React from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
+import { useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import HomeIcon from "@mui/icons-material/Home";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
-import { MovieDetailsProps } from "../types/movieAppTypes"; 
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { MovieDetailsProps } from "../types/movieAppTypes";
 
-const styles = {
-    root: {  
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center",
-    flexWrap: "wrap",
-    padding: 1.5,
-  },
-  avatar: {
-    backgroundColor: "rgb(255, 0, 0)",
-  }
-};
-
-const MovieHeader= (movie: MovieDetailsProps) => {
-  
-    const favourites = JSON.parse(localStorage.getItem("favourites") || "[]");
+const MovieHeader = (movie: MovieDetailsProps) => {
+  const navigate = useNavigate();
+  const favourites = JSON.parse(localStorage.getItem("favourites") || "[]");
   const isFavourite = favourites.find((f: { id: number }) => f.id === movie.id);
 
   return (
-    <Paper component="div" sx={styles.root}>
-      <IconButton aria-label="go back">
-        <ArrowBackIcon color="primary" fontSize="large" />
+    <Box
+      sx={{
+        background: "linear-gradient(to right, #000000, #1a1a2e)",
+        borderBottom: "2px solid #e50914",
+        px: 3,
+        py: 2,
+        display: "flex",
+        alignItems: "center",
+        gap: 2,
+      }}
+    >
+      <IconButton
+        onClick={() => navigate(-1)}
+        sx={{ color: "white", backgroundColor: "rgba(255,255,255,0.1)" }}
+      >
+        <ArrowBackIcon />
       </IconButton>
 
- {isFavourite ? (
-  <Avatar sx={styles.avatar}>
-    <FavoriteIcon />
-  </Avatar>
-) : null}
+      {isFavourite && (
+        <Avatar sx={{ backgroundColor: "#e50914" }}>
+          <FavoriteIcon />
+        </Avatar>
+      )}
 
-      <Typography variant="h4" component="h3">
-        {movie.title}{"   "}
-        <a href={movie.homepage}>
-          <HomeIcon color="primary"  fontSize="large"/>
-        </a>
-        <br />
-        <span>{`${movie.tagline}`} </span>
-      </Typography>
-      <IconButton aria-label="go forward">
-        <ArrowForwardIcon color="primary" fontSize="large" />
-      </IconButton>
-    </Paper>
+      <Box>
+        <Typography variant="h4" sx={{ color: "white", fontWeight: "bold" }}>
+          {movie.title}
+        </Typography>
+        <Typography variant="subtitle1" sx={{ color: "#aaaaaa", fontStyle: "italic" }}>
+          {movie.tagline}
+        </Typography>
+      </Box>
+    </Box>
   );
 };
 
