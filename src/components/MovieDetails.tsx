@@ -12,6 +12,7 @@ import Drawer from "@mui/material/Drawer";
 import MovieReviews from './MovieReviews'
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
+import MovieCredits from "./MovieCredits";
 
 const styles = {
     chipSet: {
@@ -86,6 +87,7 @@ const MovieDetails = (movie: MovieDetailsProps) => {
             <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
                 <MovieReviews {...movie} />
             </Drawer>
+            <MovieCredits movieId={movie.id} />
         </>
     );
 };
