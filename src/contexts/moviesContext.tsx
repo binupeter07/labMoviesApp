@@ -8,6 +8,9 @@ type MovieContextInterface = {
   addReview: ((movie: MovieDetailsProps, review: Review) => void);
   mustWatch: number[];
   addToMustWatch: ((movie: MovieDetailsProps) => void);
+  isAuthenticated: boolean;
+  login: () => void;
+  logout: () => void;
 }
 
 const initialContextState: MovieContextInterface = {
@@ -17,6 +20,9 @@ const initialContextState: MovieContextInterface = {
   addReview: (movie, review) => { movie.id, review },
   mustWatch: [],
   addToMustWatch: () => {},
+  isAuthenticated: false,
+  login: () => {},
+  logout: () => {},
 };
 
 export const MoviesContext = React.createContext<MovieContextInterface>(initialContextState);
@@ -26,6 +32,18 @@ const MoviesContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [myReviews, setMyReviews] = useState<Review[]>([]);
   const [mustWatch, setMustWatch] = useState<number[]>([]);
 
+  const [isAuthenticated, setIsAuthenticated] = useState(
+  !!localStorage.getItem("token")
+);
+
+const login = () => {
+  setIsAuthenticated(true);
+};
+
+const logout = () => {
+  localStorage.removeItem("token");
+  setIsAuthenticated(false);
+};
   const addToFavourites = useCallback((movie: MovieDetailsProps) => {
     setFavourites((prevFavourites) => {
       if (!prevFavourites.includes(movie.id)) {
@@ -36,6 +54,8 @@ const MoviesContextProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const removeFromFavourites = useCallback((movie: MovieDetailsProps) => {
+
+    
     setFavourites((prevFavourites) => prevFavourites.filter((mId) => mId !== movie.id));
   }, []);
 
@@ -63,11 +83,16 @@ const MoviesContextProvider = ({ children }: { children: React.ReactNode }) => {
         addReview,
         mustWatch,
         addToMustWatch,
+        isAuthenticated,
+        login,
+        logout,
       }}
     >
       {children}
     </MoviesContext.Provider>
   );
 };
+
+
 
 export default MoviesContextProvider;

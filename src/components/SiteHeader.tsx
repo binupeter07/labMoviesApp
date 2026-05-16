@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from "react";
+import React, { useState, MouseEvent, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -11,6 +11,7 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { MoviesContext } from "../contexts/moviesContext";
 
 const styles = {
   title: {
@@ -26,18 +27,19 @@ const SiteHeader = () => {
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const { isAuthenticated, logout } = useContext(MoviesContext);
 
-const menuOptions = [
-  { label: "Home", path: "/" },
-  { label: "Favorites", path: "/movies/favourites" },
-  { label: "Upcoming", path: "/movies/upcoming" },
-  { label: "Trending", path: "/movies/trending" },
-  { label: "Now Playing", path: "/movies/nowplaying" },
-  { label: "Actors", path: "/actors" },
-  { label: "Fantasy Movie", path: "/movies/fantasy" },
-  { label: "My Fantasy Movies", path: "/movies/fantasy/list" },
-  { label: "Playlists", path: "/playlists" },
-];
+  const menuOptions = [
+    { label: "Home", path: "/" },
+    { label: "Favorites", path: "/movies/favourites" },
+    { label: "Upcoming", path: "/movies/upcoming" },
+    { label: "Trending", path: "/movies/trending" },
+    { label: "Now Playing", path: "/movies/nowplaying" },
+    { label: "Actors", path: "/actors" },
+    { label: "Fantasy Movie", path: "/movies/fantasy" },
+    { label: "My Fantasy Movies", path: "/movies/fantasy/list" },
+    { label: "Playlists", path: "/playlists" },
+  ];
 
   const handleMenuSelect = (pageURL: string) => {
     navigate(pageURL);
@@ -45,6 +47,15 @@ const menuOptions = [
 
   const handleMenu = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleAuthAction = () => {
+    if (isAuthenticated) {
+      logout();
+      navigate("/");
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
@@ -92,6 +103,9 @@ const menuOptions = [
                     {opt.label}
                   </MenuItem>
                 ))}
+                <MenuItem onClick={handleAuthAction}>
+                  {isAuthenticated ? "Logout" : "Login"}
+                </MenuItem>
               </Menu>
             </>
           ) : (
@@ -105,6 +119,12 @@ const menuOptions = [
                   {opt.label}
                 </Button>
               ))}
+              <Button
+                color="inherit"
+                onClick={handleAuthAction}
+              >
+                {isAuthenticated ? "Logout" : "Login"}
+              </Button>
             </>
           )}
         </Toolbar>
