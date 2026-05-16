@@ -10,6 +10,8 @@ import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from './MovieReviews'
+import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 const styles = {
     chipSet: {
@@ -76,6 +78,11 @@ const MovieDetails = (movie: MovieDetailsProps) => {
                 <NavigationIcon />
                 Reviews
             </Fab>
+            <Link to={`/movies/${movie.id}/similar`}>
+            <Button variant="contained" color="primary" sx={{ mt: 2 }}>
+             Similar Movies
+            </Button>
+            </Link>
             <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
                 <MovieReviews {...movie} />
             </Drawer>
