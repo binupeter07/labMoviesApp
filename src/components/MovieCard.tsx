@@ -11,19 +11,12 @@ import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
+import Chip from "@mui/material/Chip";
 import img from '../images/film-poster-placeholder.png';
 import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
 import { Link } from "react-router-dom";
 import { MoviesContext } from "../contexts/moviesContext";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
-
-const styles = {
-  card: { maxWidth: 345 },
-  media: { height: 500 },
-  avatar: {
-    backgroundColor: "rgb(255, 0, 0)",
-  },
-};
 
 interface MovieCardProps {
   movie: DiscoverMovieOverviewProps;
@@ -36,54 +29,105 @@ const MovieCard = ({ movie, action }: MovieCardProps) => {
   const isMustWatch = mustWatch.find((id) => id === movie.id) ? true : false;
 
   return (
-    <Card sx={styles.card}>
+    <Card
+      sx={{
+        maxWidth: 345,
+        backgroundColor: "#1f1f1f",
+        color: "white",
+        borderRadius: 3,
+        transition: "transform 0.3s, box-shadow 0.3s",
+        "&:hover": {
+          transform: "scale(1.03)",
+          boxShadow: "0 8px 20px rgba(229, 9, 20, 0.4)",
+        },
+      }}
+    >
       <CardHeader
-  avatar={
-    isFavourite ? (
-      <Avatar sx={styles.avatar}>
-        <FavoriteIcon />
-      </Avatar>
-    ) : isMustWatch ? (
-      <Avatar sx={{ backgroundColor: "rgb(255, 0, 0)" }}>
-        <PlaylistAddIcon />
-      </Avatar>
-    ) : null
-  }
+        avatar={
+          isFavourite ? (
+            <Avatar sx={{ backgroundColor: "#e50914" }}>
+              <FavoriteIcon />
+            </Avatar>
+          ) : isMustWatch ? (
+            <Avatar sx={{ backgroundColor: "#e50914" }}>
+              <PlaylistAddIcon />
+            </Avatar>
+          ) : null
+        }
         title={
-          <Typography variant="h5" component="p">
-            {movie.title}{" "}
+          <Typography
+            variant="h6"
+            component="p"
+            sx={{
+              color: "white",
+              fontWeight: "bold",
+              fontSize: "0.95rem",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {movie.title}
           </Typography>
         }
+        sx={{ backgroundColor: "#141414", pb: 1 }}
       />
       <CardMedia
-        sx={styles.media}
+        sx={{
+          height: 400,
+          objectFit: "cover",
+        }}
         image={
           movie.poster_path
             ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
             : img
         }
       />
-      <CardContent>
-        <Grid container>
+      <CardContent sx={{ backgroundColor: "#1f1f1f", pb: 1 }}>
+        <Grid container spacing={1}>
           <Grid item xs={6}>
-            <Typography variant="h6" component="p">
-              <CalendarIcon fontSize="small" />
+            <Typography
+              variant="body2"
+              sx={{ color: "#aaaaaa", display: "flex", alignItems: "center", gap: 0.5 }}
+            >
+              <CalendarIcon fontSize="small" sx={{ color: "#e50914" }} />
               {movie.release_date}
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="h6" component="p">
-              <StarRateIcon fontSize="small" />
-              {"  "} {movie.vote_average}{" "}
+            <Typography
+              variant="body2"
+              sx={{ color: "#aaaaaa", display: "flex", alignItems: "center", gap: 0.5 }}
+            >
+              <StarRateIcon fontSize="small" sx={{ color: "#f5c518" }} />
+              {movie.vote_average?.toFixed(1)}
             </Typography>
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions
+        sx={{
+          backgroundColor: "#141414",
+          justifyContent: "space-between",
+          px: 2,
+          pb: 2,
+        }}
+      >
         {action(movie)}
-        <Link to={`/movies/${movie.id}`}>
-          <Button variant="outlined" size="medium" color="primary">
-            More Info ...
+        <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>
+          <Button
+            variant="contained"
+            size="small"
+            sx={{
+              backgroundColor: "#e50914",
+              color: "white",
+              fontWeight: "bold",
+              "&:hover": {
+                backgroundColor: "#b20710",
+              },
+            }}
+          >
+            More Info
           </Button>
         </Link>
       </CardActions>
