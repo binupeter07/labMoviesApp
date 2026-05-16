@@ -78,3 +78,10 @@ export type FantasyMovie = {
   runtime: number;
   productionCompany: string;
 };
+
+export type Playlist = {
+  id: string;
+  title: string;
+  theme: string;
+  movies: DiscoverMovieOverviewProps[];
+};

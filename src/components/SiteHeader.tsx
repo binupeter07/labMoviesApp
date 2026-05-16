@@ -34,7 +34,9 @@ const menuOptions = [
   { label: "Trending", path: "/movies/trending" },
   { label: "Now Playing", path: "/movies/nowplaying" },
   { label: "Actors", path: "/actors" },
+  { label: "Fantasy Movie", path: "/movies/fantasy" },
   { label: "My Fantasy Movies", path: "/movies/fantasy/list" },
+  { label: "Playlists", path: "/playlists" },
 ];
 
   const handleMenuSelect = (pageURL: string) => {

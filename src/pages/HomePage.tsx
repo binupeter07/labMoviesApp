@@ -6,6 +6,7 @@ import MovieFilterUI, { titleFilter, genreFilter } from "../components/MovieFilt
 import { useQuery } from "react-query";
 import Spinner from "../components/Spinner";
 import AddToFavouritesIcon from '../components/cardIcons/AddToFavourites';
+import AddToPlaylistIcon from "../components/cardIcons/AddToPlaylist";
 
 const titleFiltering = {
   name: "title",
@@ -46,8 +47,13 @@ const HomePage = () => {
         title="Discover Movies"
         movies={displayedMovies}
         action={(movie: DiscoverMovieOverviewProps) => {
-          return <AddToFavouritesIcon {...movie} />;
-        }}
+          return (
+          <>
+          <AddToFavouritesIcon {...movie} />
+          <AddToPlaylistIcon {...movie} />
+        </>
+  );
+}}
       />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
