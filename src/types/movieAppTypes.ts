@@ -69,3 +69,12 @@ export type CastMember = {
   profile_path: string | null;
   order: number;
 };
+
+export type FantasyMovie = {
+  title: string;
+  overview: string;
+  genres: string[];
+  releaseDate: string;
+  runtime: number;
+  productionCompany: string;
+};

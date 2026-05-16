@@ -27,14 +27,15 @@ const SiteHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  const menuOptions = [
-    { label: "Home", path: "/" },
-    { label: "Favorites", path: "/movies/favourites" },
-    { label: "Upcoming", path: "/movies/upcoming" },
-    { label: "Trending", path: "/movies/trending" },
-    { label: "Actors", path: "/actors" },
-    { label: "Now Playing", path: "/movies/nowplaying" },
-  ];
+const menuOptions = [
+  { label: "Home", path: "/" },
+  { label: "Favorites", path: "/movies/favourites" },
+  { label: "Upcoming", path: "/movies/upcoming" },
+  { label: "Trending", path: "/movies/trending" },
+  { label: "Now Playing", path: "/movies/nowplaying" },
+  { label: "Actors", path: "/actors" },
+  { label: "My Fantasy Movies", path: "/movies/fantasy/list" },
+];
 
   const handleMenuSelect = (pageURL: string) => {
     navigate(pageURL);
