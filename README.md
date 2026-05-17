@@ -68,21 +68,21 @@ MovieHub is  built with React and TypeScript that allows users to discover, expl
 ## Pages
 
 | Page | URL | Access |
-| Home | / - Public 
-| Now Playing | /movies/nowplaying - Public 
-| Trending | /movies/trending - Public 
-| Actors | /actors - Public 
-| Actor Details | /actors/:id - Public 
-| Login | /login - Public 
-| Favourites | /movies/favourites - Private 
-| Upcoming | /movies/upcoming - Private 
-| Movie Details | /movies/:id - Private 
-| Similar Movies | /movies/:id/similar - Private 
-| Fantasy Movie | /movies/fantasy - Private 
-| My Fantasy Movies | /movies/fantasy/list - Private
-| Playlists | /playlists - Private 
-| Write Review | /reviews/form - Private 
-| Full Review | /reviews/:id - Private 
+- | Home | / - Public 
+- | Now Playing | /movies/nowplaying - Public 
+- | Trending | /movies/trending - Public 
+- | Actors | /actors - Public 
+- | Actor Details | /actors/:id - Public 
+- | Login | /login - Public 
+- | Favourites | /movies/favourites - Private 
+- | Upcoming | /movies/upcoming - Private 
+- | Movie Details | /movies/:id - Private 
+- | Similar Movies | /movies/:id/similar - Private 
+- | Fantasy Movie | /movies/fantasy - Private 
+- | My Fantasy Movies | /movies/fantasy/list - Private
+- | Playlists | /playlists - Private 
+- | Write Review | /reviews/form - Private 
+- | Full Review | /reviews/:id - Private 
 
 
 ### Context API Pattern
