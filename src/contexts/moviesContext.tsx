@@ -3,16 +3,17 @@ import { MovieDetailsProps, Review } from "../types/movieAppTypes";
 
 type MovieContextInterface = {
   favourites: number[];
-  addToFavourites: ((movie: MovieDetailsProps) => void);
-  removeFromFavourites: ((movie: MovieDetailsProps) => void);
+  addToFavourites: ((movie: any) => void);
+  removeFromFavourites: ((movie: any) => void);
   addReview: ((movie: MovieDetailsProps, review: Review) => void);
   mustWatch: number[];
-  addToMustWatch: ((movie: MovieDetailsProps) => void);
+  addToMustWatch: ((movie: any) => void);
   isAuthenticated: boolean;
   login: () => void;
   logout: () => void;
 }
 
+  
 const initialContextState: MovieContextInterface = {
   favourites: [],
   addToFavourites: () => {},
@@ -33,18 +34,19 @@ const MoviesContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [mustWatch, setMustWatch] = useState<number[]>([]);
 
   const [isAuthenticated, setIsAuthenticated] = useState(
-  !!localStorage.getItem("token")
-);
+    !!localStorage.getItem("token")
+  );
 
-const login = () => {
-  setIsAuthenticated(true);
-};
+  const login = () => {
+    setIsAuthenticated(true);
+  };
 
-const logout = () => {
-  localStorage.removeItem("token");
-  setIsAuthenticated(false);
-};
-  const addToFavourites = useCallback((movie: MovieDetailsProps) => {
+  const logout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+  };
+
+  const addToFavourites = useCallback((movie: any) => {
     setFavourites((prevFavourites) => {
       if (!prevFavourites.includes(movie.id)) {
         return [...prevFavourites, movie.id];
@@ -53,9 +55,7 @@ const logout = () => {
     });
   }, []);
 
-  const removeFromFavourites = useCallback((movie: MovieDetailsProps) => {
-
-    
+  const removeFromFavourites = useCallback((movie: any) => {
     setFavourites((prevFavourites) => prevFavourites.filter((mId) => mId !== movie.id));
   }, []);
 
@@ -63,7 +63,7 @@ const logout = () => {
     setMyReviews({ ...myReviews, [movie.id]: review });
   };
 
-  const addToMustWatch = useCallback((movie: MovieDetailsProps) => {
+  const addToMustWatch = useCallback((movie: any) => {
     setMustWatch((prevMustWatch) => {
       if (!prevMustWatch.includes(movie.id)) {
         const updated = [...prevMustWatch, movie.id];
@@ -92,7 +92,5 @@ const logout = () => {
     </MoviesContext.Provider>
   );
 };
-
-
 
 export default MoviesContextProvider;

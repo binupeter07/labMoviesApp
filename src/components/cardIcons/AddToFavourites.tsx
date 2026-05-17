@@ -2,8 +2,8 @@ import  {MouseEvent, useContext} from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import {MovieDetailsProps} from "../../types/movieAppTypes";
-const AddToFavouritesIcon = (movie: MovieDetailsProps) => {
+
+const AddToFavouritesIcon = (movie: any) => {
   const context = useContext(MoviesContext);
 
   const onUserSelect = (e: MouseEvent<HTMLButtonElement>) => {

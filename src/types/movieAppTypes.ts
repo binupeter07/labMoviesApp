@@ -85,3 +85,27 @@ export type Playlist = {
   theme: string;
   movies: DiscoverMovieOverviewProps[];
 };
+
+export type Actor = {
+  id: number;
+  name: string;
+  profile_path: string | null;
+  known_for_department: string;
+  popularity: number;
+  known_for: {
+    title?: string;
+    name?: string;
+    media_type: string;
+  }[];
+};
+
+export type ActorDetails = {
+  id: number;
+  name: string;
+  biography: string;
+  birthday: string | null;
+  place_of_birth: string | null;
+  profile_path: string | null;
+  known_for_department: string;
+  popularity: number;
+};

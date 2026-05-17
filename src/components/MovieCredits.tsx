@@ -1,7 +1,6 @@
 import { useQuery } from "react-query";
 import { getMovieCredits } from "../api/tmdb-api";
 import { CastMember } from "../types/movieAppTypes";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";

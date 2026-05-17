@@ -1,10 +1,9 @@
 import { MouseEvent, useContext } from "react";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
-import { DiscoverMovieOverviewProps } from "../../types/movieAppTypes";
 import { MoviesContext } from "../../contexts/moviesContext";
 import IconButton from "@mui/material/IconButton";
 
-const AddToMustWatchIcon = (movie: DiscoverMovieOverviewProps) => {
+const AddToMustWatchIcon = (movie: any) => {
   const context = useContext(MoviesContext);
 
   const onUserSelect = (e: MouseEvent<HTMLButtonElement>) => {

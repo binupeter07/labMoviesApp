@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMovie } from '../api/tmdb-api'
-import { MovieDetailsProps } from '../types/interface'
+import { MovieDetailsProps } from '../types/movieAppTypes'
 
 type MovieHookReturnType = [MovieDetailsProps | undefined, React.Dispatch<React.SetStateAction<MovieDetailsProps | undefined>>];
 
