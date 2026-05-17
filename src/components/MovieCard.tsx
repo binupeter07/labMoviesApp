@@ -15,7 +15,6 @@ import img from '../images/film-poster-placeholder.png';
 import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
 import { Link } from "react-router-dom";
 import { MoviesContext } from "../contexts/moviesContext";
-import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 
 interface MovieCardProps {
