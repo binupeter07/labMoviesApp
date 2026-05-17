@@ -32,9 +32,6 @@ const styles = {
       marginTop: 2,
     },
   },
-  textField: {
-    width: "40ch",
-  },
   submit: {
     marginRight: 2,
   },
@@ -44,6 +41,17 @@ const styles = {
       width: "100%",
     },
   },
+};
+
+const textFieldSx = {
+  "& .MuiOutlinedInput-root": {
+    color: "white",
+    "& fieldset": { borderColor: "#e50914" },
+    "&:hover fieldset": { borderColor: "#e50914" },
+  },
+  "& .MuiInputLabel-root": { color: "#aaaaaa" },
+  "& .MuiSelect-icon": { color: "white" },
+  "& .MuiFormHelperText-root": { color: "#aaaaaa" },
 };
 
 const ReviewForm = (movie: MovieDetailsProps) => {
@@ -86,8 +94,8 @@ const ReviewForm = (movie: MovieDetailsProps) => {
   };
 
   return (
-    <Box component="div" sx={styles.root}>
-      <Typography component="h2" variant="h3">
+    <Box component="div" sx={{ ...styles.root, color: "white" }}>
+      <Typography component="h2" variant="h3" sx={{ color: "white", mb: 2 }}>
         Write a review
       </Typography>
       <Snackbar
@@ -110,7 +118,7 @@ const ReviewForm = (movie: MovieDetailsProps) => {
           defaultValue=""
           render={({ field: { onChange, value } }) => (
             <TextField
-              sx={{ width: "40ch" }}
+              sx={{ width: "40ch", ...textFieldSx }}
               variant="outlined"
               margin="normal"
               required
@@ -123,7 +131,7 @@ const ReviewForm = (movie: MovieDetailsProps) => {
           )}
         />
         {errors.author && (
-          <Typography variant="h6" component="p">
+          <Typography variant="h6" component="p" sx={{ color: "#e50914" }}>
             {errors.author.message}
           </Typography>
         )}
@@ -147,11 +155,12 @@ const ReviewForm = (movie: MovieDetailsProps) => {
               id="review"
               multiline
               minRows={10}
+              sx={textFieldSx}
             />
           )}
         />
         {errors.content && (
-          <Typography variant="h6" component="p">
+          <Typography variant="h6" component="p" sx={{ color: "#e50914" }}>
             {errors.content.message}
           </Typography>
         )}
@@ -168,29 +177,51 @@ const ReviewForm = (movie: MovieDetailsProps) => {
               value={rating}
               onChange={handleRatingChange}
               helperText="Don't forget your rating"
+              sx={textFieldSx}
+              SelectProps={{
+                MenuProps: {
+                  PaperProps: {
+                    sx: {
+                      backgroundColor: "#1f1f1f",
+                      color: "white",
+                    },
+                  },
+                },
+              }}
             >
               {ratings.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
+                <MenuItem
+                  key={option.value}
+                  value={option.value}
+                  sx={{ color: "white", "&:hover": { backgroundColor: "#e50914" } }}
+                >
                   {option.label}
                 </MenuItem>
               ))}
             </TextField>
           )}
         />
-        <Box>
+        <Box sx={{ mt: 2 }}>
           <Button
             type="submit"
             variant="contained"
-            color="primary"
-            sx={styles.submit}
+            sx={{
+              ...styles.submit,
+              backgroundColor: "#e50914",
+              "&:hover": { backgroundColor: "#b20710" },
+            }}
           >
             Submit
           </Button>
           <Button
             type="reset"
             variant="contained"
-            color="secondary"
-            sx={styles.submit}
+            sx={{
+              ...styles.submit,
+              backgroundColor: "#1f1f1f",
+              color: "white",
+              "&:hover": { backgroundColor: "#333" },
+            }}
             onClick={() => {
               reset({
                 author: "",

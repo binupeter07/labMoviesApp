@@ -5,6 +5,7 @@ type MovieContextInterface = {
   favourites: number[];
   addToFavourites: ((movie: any) => void);
   removeFromFavourites: ((movie: any) => void);
+  removeFromMustWatch: ((movie: any) => void);
   addReview: ((movie: MovieDetailsProps, review: Review) => void);
   mustWatch: number[];
   addToMustWatch: ((movie: any) => void);
@@ -13,11 +14,12 @@ type MovieContextInterface = {
   logout: () => void;
 }
 
-  
+
 const initialContextState: MovieContextInterface = {
   favourites: [],
   addToFavourites: () => {},
   removeFromFavourites: () => {},
+  removeFromMustWatch: () => {},
   addReview: (movie, review) => { movie.id, review },
   mustWatch: [],
   addToMustWatch: () => {},
@@ -59,6 +61,11 @@ const MoviesContextProvider = ({ children }: { children: React.ReactNode }) => {
     setFavourites((prevFavourites) => prevFavourites.filter((mId) => mId !== movie.id));
   }, []);
 
+  const removeFromMustWatch = useCallback((movie: any) => {
+    setMustWatch((prevMustWatch) => prevMustWatch.filter((mId) => mId !== movie.id)
+  );
+  }, []);
+
   const addReview = (movie: MovieDetailsProps, review: Review) => {
     setMyReviews({ ...myReviews, [movie.id]: review });
   };
@@ -80,6 +87,7 @@ const MoviesContextProvider = ({ children }: { children: React.ReactNode }) => {
         favourites,
         addToFavourites,
         removeFromFavourites,
+        removeFromMustWatch,
         addReview,
         mustWatch,
         addToMustWatch,

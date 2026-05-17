@@ -11,12 +11,6 @@ import { getMovieReviews } from "../api/tmdb-api";
 import { excerpt } from "../util";
 import { MovieDetailsProps, MovieReviewProps } from "../types/movieAppTypes";
 
-const styles = {
-  table: {
-    minWidth: 550,
-  },
-};
-
 const MovieReviews = (movie: MovieDetailsProps) => {
   const [reviews, setReviews] = useState([]);
 
@@ -28,29 +22,44 @@ const MovieReviews = (movie: MovieDetailsProps) => {
   }, []);
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={styles.table} aria-label="reviews table">
+    <TableContainer
+      component={Paper}
+      sx={{ backgroundColor: "#1f1f1f" }}
+    >
+      <Table aria-label="reviews table">
         <TableHead>
-          <TableRow>
-            <TableCell>Author</TableCell>
-            <TableCell align="center">Excerpt</TableCell>
-            <TableCell align="right">More</TableCell>
+          <TableRow sx={{ backgroundColor: "#141414" }}>
+            <TableCell sx={{ color: "#e50914", fontWeight: "bold" }}>
+              Author
+            </TableCell>
+            <TableCell align="center" sx={{ color: "#e50914", fontWeight: "bold" }}>
+              Excerpt
+            </TableCell>
+            <TableCell align="right" sx={{ color: "#e50914", fontWeight: "bold" }}>
+              More
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {reviews.map((r: MovieReviewProps) => (
-            <TableRow key={r.id}>
-              <TableCell component="th" scope="row">
+            <TableRow
+              key={r.id}
+              sx={{
+                "&:hover": { backgroundColor: "#2f2f2f" },
+                borderBottom: "1px solid #333",
+              }}
+            >
+              <TableCell sx={{ color: "white" }} component="th" scope="row">
                 {r.author}
               </TableCell>
-              <TableCell>{excerpt(r.content ?? "")}</TableCell>
-              <TableCell>
+              <TableCell sx={{ color: "#aaaaaa" }}>
+                {excerpt(r.content ?? "")}
+              </TableCell>
+              <TableCell align="right">
                 <Link
                   to={`/reviews/${r.id}`}
-                  state={{
-                    review: r,
-                    movie: movie,
-                  }}
+                  state={{ review: r, movie: movie }}
+                  style={{ color: "#e50914", textDecoration: "none", fontWeight: "bold" }}
                 >
                   Full Review
                 </Link>

@@ -16,6 +16,7 @@ import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
 import { Link } from "react-router-dom";
 import { MoviesContext } from "../contexts/moviesContext";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 
 interface MovieCardProps {
   movie: DiscoverMovieOverviewProps;
@@ -47,12 +48,12 @@ const MovieCard = ({ movie, action }: MovieCardProps) => {
             <Avatar sx={{ backgroundColor: "#e50914" }}>
               <FavoriteIcon />
             </Avatar>
-          ) : isMustWatch ? (
-            <Avatar sx={{ backgroundColor: "#e50914" }}>
-              <PlaylistAddIcon />
-            </Avatar>
-          ) : null
-        }
+           ) : isMustWatch ? (
+              <Avatar sx={{ backgroundColor: "rgb(255, 0, 0)" }}>
+                <BookmarkAddIcon />
+              </Avatar>
+           ):null
+          }
         title={
           <Typography
             variant="h6"

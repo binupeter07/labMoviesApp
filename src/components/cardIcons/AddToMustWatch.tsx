@@ -1,19 +1,29 @@
 import { MouseEvent, useContext } from "react";
-import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
-import { MoviesContext } from "../../contexts/moviesContext";
 import IconButton from "@mui/material/IconButton";
+import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
+import BookmarkRemoveIcon from "@mui/icons-material/BookmarkRemove";
+import { MoviesContext } from "../../contexts/moviesContext";
 
 const AddToMustWatchIcon = (movie: any) => {
   const context = useContext(MoviesContext);
+  const isMustWatch = context.mustWatch.includes(movie.id);
 
   const onUserSelect = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    context.addToMustWatch(movie);
+    if (isMustWatch) {
+      context.removeFromMustWatch(movie);
+    } else {
+      context.addToMustWatch(movie);
+    }
   };
 
   return (
     <IconButton aria-label="add to must watch" onClick={onUserSelect}>
-      <PlaylistAddIcon color="primary" fontSize="large" />
+      {isMustWatch ? (
+        <BookmarkRemoveIcon color="error" fontSize="large" />
+      ) : (
+        <BookmarkAddIcon color="primary" fontSize="large" />
+      )}
     </IconButton>
   );
 };
